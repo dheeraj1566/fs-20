@@ -12,6 +12,7 @@ import Profile from "./pages/Profile";
 import Cart from "./pages/Cart";
 import { AuthProvider } from "./contexts/Auth";
 import SingleProduct from "./pages/SIngleProduct";
+import AddCoupon from "./pages/AddCoupon";
 
 function App() {
   const router = createBrowserRouter([
@@ -66,6 +67,10 @@ function App() {
               <Cart />
             </ProtectedRoute>
           ),
+        },
+        {
+          path: "/add-coupon",
+          element: <AddCoupon />,
         },
       ],
     },

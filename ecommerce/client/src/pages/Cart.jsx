@@ -1,16 +1,26 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useCart from "../hooks/useCart";
 import { Link } from "react-router-dom";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 
 function Cart() {
   const { cart, fetchCart, updateQuantity, removeFromCart } = useCart();
+  const [couponCode, setCouponCode] = useState("");
+  const [discount, setDiscount] = useState(0);
 
   useEffect(() => {
     fetchCart();
   }, []);
 
-//   console.log(cart);
+  // Handle applying coupon code
+  const handleApplyCoupon = () => {
+    if (couponCode === "SAVE10") {
+      setDiscount(10); // Assume the coupon gives a 10% discount
+    } else {
+      alert("Invalid Coupon Code");
+      setDiscount(0);
+    }
+  };
 
   if (!cart || cart?.items?.length === 0) {
     return (
@@ -22,6 +32,8 @@ function Cart() {
       </div>
     );
   }
+
+  const totalAfterDiscount = cart.totalAmount - (cart.totalAmount * discount) / 100;
 
   return (
     <div className="container mx-auto px-8 py-4">
@@ -97,11 +109,34 @@ function Cart() {
                 <span>Free</span>
               </div>
             </div>
+
+            {/* Coupon Code Section */}
+            <div className="space-y-2 py-4 border-t">
+              <div className="flex items-center">
+                <input
+                  type="text"
+                  placeholder="Enter coupon code"
+                  value={couponCode}
+                  onChange={(e) => setCouponCode(e.target.value)}
+                  className="flex-1 border p-2 rounded"
+                />
+                <button
+                  onClick={handleApplyCoupon}
+                  className="ml-2 bg-blue-500 text-white px-4 py-2 rounded"
+                >
+                  Apply
+                </button>
+              </div>
+              {discount > 0 && (
+                <p className="text-green-500 font-bold">Coupon applied! {discount}% off</p>
+              )}
+            </div>
+
             <div className="flex justify-between py-4 font-bold">
               <span>Total</span>
               <span className="flex items-center">
                 <LiaRupeeSignSolid />
-                {Math.round(cart.totalAmount)}
+                {Math.round(totalAfterDiscount)}
               </span>
             </div>
             <button className="w-full bg-blue-500 text-white py-2 rounded">

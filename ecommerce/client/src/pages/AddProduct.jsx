@@ -46,9 +46,7 @@ function AddProduct() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    // console.log(data);
     const formdata = new FormData();
-    // const finalData = Object.fromEntries(formdata.entries());
 
     formdata.append("name", data.name);
     formdata.append("price", data.price);
@@ -66,109 +64,138 @@ function AddProduct() {
 
   return (
     <>
-      <form action="" onSubmit={handleSubmit} encType="multipart/form-data">
-        <input
-          type="text"
-          placeholder="Name"
-          value={data.name}
-          name="name"
-          onChange={handleChange}
-        />
-        <br />
-        <input
-          type="text"
-          placeholder="Brand"
-          value={data.brand}
-          name="brand"
-          onChange={handleChange}
-        />
-        <br />
-        <input
-          type="text"
-          placeholder="Category"
-          value={data.category}
-          name="category"
-          onChange={handleChange}
-        />
-        <br />
-        <input
-          type="text"
-          placeholder="Price"
-          value={data.price}
-          name="price"
-          onChange={handleChange}
-        />
-        <br />
-        <textarea
-          name="description"
-          value={data.description}
-          placeholder="Description"
-          id=""
-          onChange={handleChange}
-        ></textarea>
-        <br />
-        <div id="attributes">
-          {data.attributes.map((attribute, index) => {
-            return (
-              <div className="attribute-group" key={index}>
+      <form
+        className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-md"
+        onSubmit={handleSubmit}
+        encType="multipart/form-data"
+      >
+        <h2 className="text-2xl font-bold mb-6 text-center">Add Product</h2>
+
+        <div className="space-y-4">
+          <input
+            type="text"
+            placeholder="Name"
+            value={data.name}
+            name="name"
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+          />
+
+          <input
+            type="text"
+            placeholder="Brand"
+            value={data.brand}
+            name="brand"
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+          />
+
+          <input
+            type="text"
+            placeholder="Category"
+            value={data.category}
+            name="category"
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+          />
+
+          <input
+            type="text"
+            placeholder="Price"
+            value={data.price}
+            name="price"
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+          />
+
+          <textarea
+            name="description"
+            value={data.description}
+            placeholder="Description"
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+          ></textarea>
+
+          <div id="attributes" className="space-y-4">
+            {data.attributes.map((attribute, index) => (
+              <div className="flex gap-4" key={index}>
                 <input
                   type="text"
                   name="attributeName"
-                  placeholder="Enter Attribute Name"
+                  placeholder="Attribute Name"
                   value={attribute.name}
                   onChange={(e) =>
                     handleAttributeChange(index, "name", e.target.value)
                   }
+                  className="flex-1 p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
                 />
                 <input
                   type="text"
                   name="attributeValue"
-                  placeholder="Enter Attribute Value"
+                  placeholder="Attribute Value"
                   value={attribute.value}
                   onChange={(e) =>
                     handleAttributeChange(index, "value", e.target.value)
                   }
+                  className="flex-1 p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
                 />
               </div>
-            );
-          })}
-          {/*
-           */}
+            ))}
+            <button
+              type="button"
+              onClick={addNewAttribute}
+              className="text-blue-500 font-medium hover:underline"
+            >
+              + Add Attribute
+            </button>
+          </div>
+
+          <div id="inStock" className="flex items-center gap-4">
+            <label className="flex items-center">
+              <input
+                type="radio"
+                name="inStock"
+                value={true}
+                onChange={handleChange}
+                className="mr-2"
+              />
+              In Stock
+            </label>
+            <label className="flex items-center">
+              <input
+                type="radio"
+                name="inStock"
+                value={false}
+                onChange={handleChange}
+                className="mr-2"
+              />
+              Out of Stock
+            </label>
+          </div>
+
+          <input
+            type="text"
+            name="inventory"
+            placeholder="Inventory Count"
+            value={data.inventory}
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+          />
+
+          <input
+            type="file"
+            name="image"
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+          />
 
           <button
-            type="button"
-            className="flex items-center gap-2 text-blue-500"
-            onClick={addNewAttribute}
+            type="submit"
+            className="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700"
           >
-            Add Attribute
+            Add Product
           </button>
         </div>
-        <div id="inStock">
-          <input
-            type="radio"
-            name="inStock"
-            value={true}
-            onChange={handleChange}
-          />
-          True
-          <input
-            type="radio"
-            name="inStock"
-            value={false}
-            onChange={handleChange}
-          />
-          False
-        </div>
-        <input
-          type="text"
-          name="inventory"
-          placeholder="Enter Inventory Count"
-          value={data.inventory}
-          onChange={handleChange}
-        />{" "}
-        <br />
-        <input type="file" name="image" onChange={handleChange} /> <br />
-        <button type="submit">Add Product</button>
       </form>
     </>
   );

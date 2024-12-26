@@ -15,7 +15,6 @@ function Header() {
     await logout();
   };
 
-  // Don't show header while checking authentication
   if (loading) {
     return null;
   }
@@ -45,6 +44,7 @@ function Header() {
               </Link>
               <Link to="/addProduct">Add Product</Link>
               <Link to="/profile">Profile</Link>
+              {/* <Link to="/addCoupon">addcoupon</Link> */}
               <button onClick={handleLogout}>Logout</button>
             </>
           ) : (
